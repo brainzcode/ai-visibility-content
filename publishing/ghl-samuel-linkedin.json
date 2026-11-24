@@ -1,0 +1,20 @@
+{
+  "posts": [
+    {
+      "asset_id": "s1-1.2-10-second-test",
+      "day": 2,
+      "date": "2026-11-12",
+      "timezone": "America/Los_Angeles",
+      "follow_up_comment": "",
+      "ghl_post_id": "",
+      "platform": "linkedin",
+      "slot": "A",
+      "local_time": "11:00",
+      "caption": "Open any AI assistant and type your service plus your city. Are you in the answer?\n\nDo this before you finish your coffee.\n\nOpen ChatGPT, Gemini or Google and search the way a customer would:\n\n\"best [your service] in [your city]\"\n\nThen check three things.\n\n1. Are you named at all? Read the whole answer, not only the top pick.\n2. Is what it says about you right? Your hours, your services, the areas you cover, your phone number.\n3. Who did it recommend instead, and what do they have that you don't?\n\nWhen I ran this for wash and fold in San Diego, the AI found 10 businesses and recommended 4. Review volume, what the reviews said, and an address on file decided who made the cut.\n\nReply IN or OUT.\n\nWe'll go through the OUTs and tell you what's holding you back.",
+      "media": [
+        "images/2026-11-12-series1-10-second-test/linkedin-facebook-1200x1200.png"
+      ],
+      "alt_text": "Graphic: Did AI pick you? A search box reads best plumber in Phoenix, next to two rubber stamps: IN in green and OUT in red."
+    }
+  ]
+}

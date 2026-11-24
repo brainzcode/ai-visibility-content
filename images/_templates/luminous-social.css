@@ -1,0 +1,357 @@
+/* Luminous social image templates: tokens, frame sizes and shared components.
+   Brand tokens come from luminousdigitalvisions.com/assets/css/main.css.
+   Fonts are the site's own files, copied into ./fonts so renders never depend
+   on the network or on what is installed on the machine doing the export. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-Variable-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("fonts/SpaceGrotesk-Variable.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+:root {
+  /* Site tokens */
+  --ink: #0b0b0c;
+  --ink-2: #3d3e43;
+  --ink-3: #54565c;
+  --paper: #ffffff;
+  --paper-2: #f2f2f0;
+  --paper-3: #e9e9e6;
+  --line: #e2e2de;
+  --accent: #24c684;
+  --accent-ink: #0b6e49;
+  --accent-dim: rgba(36, 198, 132, .14);
+  --amber: #d9971f;
+
+  /* Social dark surface. Lifted off --ink so the logo's dark tile stays visible. */
+  --bg: #131417;
+  --surface: #1c1d21;
+  --surface-2: #26272c;
+  --text: #f5f5f3;
+  --text-2: rgba(245, 245, 243, .72);
+  --text-3: rgba(245, 245, 243, .46);
+  --hair: rgba(255, 255, 255, .09);
+  --stop: #f0564a; /* used only for negative states such as the OUT stamp */
+
+  --font: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --heading: "Space Grotesk", "Inter", -apple-system, sans-serif;
+  --sh-float: 0 2px 6px rgba(0, 0, 0, .25), 0 40px 90px -30px rgba(0, 0, 0, .75);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+
+/* Opened in a browser, the source is a contact sheet of every frame. */
+body {
+  background: #3a3b40;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 60px;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* ── Frames, one per exported PNG ─────────────────────────────────────── */
+.frame {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg);
+  color: var(--text);
+}
+.frame--square { width: 1200px; height: 1200px; }  /* LinkedIn + Facebook */
+.frame--x      { width: 1600px; height: 900px;  }  /* X */
+.frame--ig     { width: 1080px; height: 1350px; }  /* Instagram carousel slide */
+.frame--tiktok { width: 1080px; height: 1920px; }  /* TikTok cover */
+
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(70% 55% at 10% 0%, rgba(36, 198, 132, .13), transparent 70%),
+    radial-gradient(60% 45% at 100% 100%, rgba(36, 198, 132, .06), transparent 70%);
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, .06) 1px, transparent 1.3px);
+  background-size: 30px 30px;
+  -webkit-mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .15));
+  mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .15));
+}
+
+/* ── Type ─────────────────────────────────────────────────────────────── */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font: 600 21px/1 var(--font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.kicker::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-dim);
+}
+.headline {
+  margin: 0;
+  font-family: var(--heading);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  color: var(--text);
+  text-wrap: balance;
+}
+.headline em { font-style: normal; color: var(--accent); }
+.sub { margin: 0; font: 400 26px/1.45 var(--font); color: var(--text-2); text-wrap: pretty; }
+.sub strong { font-weight: 600; color: var(--text); }
+.note { margin: 0; font: 400 17px/1.4 var(--font); color: var(--text-3); }
+
+/* ── Brand ────────────────────────────────────────────────────────────── */
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { display: block; width: 44px; height: auto; }
+.brand__word { font: 600 26px/1 var(--heading); letter-spacing: -.02em; color: var(--text); }
+.brand__handle { font: 500 20px/1 var(--font); color: var(--text-3); }
+
+/* ── Icons (symbols live in each page's sprite) ───────────────────────── */
+.ico { display: block; width: 1em; height: 1em; flex: none; }
+.ico--stroke { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ico--fill { fill: currentColor; }
+
+.num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--ink);
+  font: 700 28px/1 var(--heading);
+}
+
+/* ── Instagram carousel slide (1080 x 1350) ───────────────────────────── */
+.slide { display: flex; flex-direction: column; padding: 84px 84px 0; }
+.slide__top { display: flex; align-items: center; justify-content: space-between; }
+.slide__count { font: 600 20px/1 var(--font); letter-spacing: .08em; color: var(--text-3); }
+.slide__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 34px;
+  padding-bottom: 36px;
+}
+.slide__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font: 600 30px/1 var(--heading);
+  letter-spacing: -.01em;
+  color: var(--accent);
+}
+.slide__title { font-size: 78px; }
+.slide__text { margin: 0; max-width: 880px; font: 400 33px/1.45 var(--font); color: var(--text-2); text-wrap: pretty; }
+.slide__text strong { font-weight: 600; color: var(--text); }
+.slide__foot {
+  flex: none;
+  height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--hair);
+}
+.slide__hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 600 19px/1 var(--font);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.slide__hint .ico { font-size: 26px; color: var(--accent); }
+
+/* ── Checklist ────────────────────────────────────────────────────────── */
+.checklist { display: flex; flex-direction: column; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px 30px;
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--hair), 0 30px 60px -40px rgba(0, 0, 0, .8);
+}
+.checklist .box {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  margin-top: 2px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+.checklist .num { width: 48px; height: 48px; font-size: 24px; }
+.checklist b { display: block; font: 600 32px/1.2 var(--heading); letter-spacing: -.02em; color: var(--text); text-wrap: balance; }
+.checklist p { margin: 8px 0 0; font: 400 25px/1.4 var(--font); color: var(--text-2); }
+
+/* ── AI prompt box (the query a customer types) ───────────────────────── */
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 24px 24px 28px;
+  border-radius: 30px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--sh-float);
+  font: 500 30px/1.3 var(--font);
+}
+.prompt__spark { font-size: 34px; color: var(--accent-ink); }
+.prompt__text { flex: 1; min-width: 0; }
+.prompt__caret {
+  display: inline-block;
+  width: 3px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -.15em;
+  border-radius: 2px;
+  background: var(--accent-ink);
+}
+.prompt__go {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 26px;
+}
+.token {
+  padding: 0 .22em;
+  border-radius: .25em;
+  background: var(--accent-dim);
+  color: var(--accent-ink);
+  box-shadow: inset 0 0 0 2px rgba(36, 198, 132, .45);
+}
+
+/* ── Annotated AI answer on a phone (Series 1 cover format) ───────────── */
+/* Design box is 800 x 900: phone on the left, callouts on the right.
+   Place it with .ann-slot and scale it with --k. frames.js positions the
+   callouts against their anchors and draws the leader lines. */
+.ann-slot { position: absolute; width: 800px; height: 900px; transform: scale(var(--k, 1)); transform-origin: 0 0; }
+.ann { position: relative; width: 800px; height: 900px; }
+.phone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 900px;
+  padding: 12px;
+  border-radius: 64px;
+  background: #0c0d0f;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255, 255, 255, .16),
+    0 0 0 1px rgba(0, 0, 0, .6),
+    0 50px 110px -30px rgba(0, 0, 0, .85),
+    0 0 140px -30px rgba(36, 198, 132, .22);
+}
+.screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  padding: 0 20px;
+  border-radius: 52px;
+  background: #fbfbfa;
+  color: var(--ink);
+  font-family: var(--font);
+}
+.island { position: absolute; top: 12px; left: 50%; width: 110px; height: 32px; margin-left: -55px; border-radius: 20px; background: #0c0d0f; }
+.sb { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 6px 16px 0; font: 600 16px/1 var(--font); }
+.sb__icons { display: flex; align-items: flex-end; gap: 3px; }
+.sb__icons i { display: block; width: 4px; border-radius: 1px; background: var(--ink); }
+.sb__icons i:nth-child(1) { height: 6px; }
+.sb__icons i:nth-child(2) { height: 9px; }
+.sb__icons i:nth-child(3) { height: 12px; }
+.sb__icons b { display: block; width: 24px; height: 12px; margin-left: 6px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px var(--ink); position: relative; }
+.sb__icons b::after { content: ""; position: absolute; inset: 2.5px 6px 2.5px 2.5px; border-radius: 1.5px; background: var(--ink); }
+.app { display: flex; align-items: center; gap: 10px; padding: 8px 4px 14px; border-bottom: 1px solid var(--line); font: 600 16px/1 var(--font); color: var(--ink-2); }
+.app .ico { font-size: 20px; color: var(--accent-ink); }
+.bubble {
+  width: fit-content;
+  max-width: 300px;
+  margin: 16px 0 0 auto;
+  padding: 12px 18px;
+  border-radius: 22px 22px 6px 22px;
+  background: var(--paper-3);
+  font: 500 16px/1.35 var(--font);
+}
+.reply { display: flex; gap: 10px; margin-top: 16px; font: 400 15.5px/1.45 var(--font); color: var(--ink-2); }
+.reply .ico { font-size: 20px; margin-top: 1px; color: var(--accent-ink); }
+.reply p { margin: 0; }
+.res {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(11, 11, 12, .06), 0 6px 18px -10px rgba(11, 11, 12, .2);
+}
+.res--hl { box-shadow: 0 0 0 2px var(--accent), 0 10px 24px -12px rgba(11, 110, 73, .45); }
+.res__thumb { flex: none; width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #e1e4e1, #cdd4cf); }
+.res__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.redact { height: 13px; border-radius: 7px; background: #d6d8d5; }
+.res__meta { display: flex; align-items: center; gap: 6px; font: 600 15px/1 var(--font); }
+.res__meta small { font: 500 14px/1 var(--font); color: var(--ink-3); }
+.stars { display: flex; gap: 1px; font-size: 14px; color: var(--amber); }
+.res__desc { margin: 0; font: 400 14.5px/1.4 var(--font); color: var(--ink-2); }
+.chip { flex: none; padding: 7px 10px; border-radius: 999px; background: var(--accent-dim); color: var(--accent-ink); font: 600 12.5px/1 var(--font); }
+.res--more { justify-content: center; margin-top: 4px; padding: 8px; background: transparent; box-shadow: none; font: 500 14px/1 var(--font); color: var(--ink-3); }
+.res--dim { background: var(--paper-2); box-shadow: none; opacity: .6; }
+.screen__label { display: block; margin-top: 14px; font: 600 11.5px/1 var(--font); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.screen::after { content: ""; position: absolute; left: 50%; bottom: 9px; width: 136px; height: 5px; margin-left: -68px; border-radius: 3px; background: var(--ink); opacity: .85; }
+.mapbox { position: relative; overflow: hidden; margin-top: 12px; height: 207px; border-radius: 18px; }
+.mapbox svg { display: block; width: 100%; height: 100%; }
+
+.leaders { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.leaders path { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.leaders circle { fill: var(--accent); stroke: rgba(36, 198, 132, .35); stroke-width: 10; paint-order: stroke; }
+.callout {
+  position: absolute;
+  left: 494px;
+  width: 306px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px 20px;
+  border-radius: 22px;
+  background: rgba(30, 31, 36, .96);
+  box-shadow: inset 0 0 0 1px var(--hair), 0 24px 50px -24px rgba(0, 0, 0, .8);
+}
+.callout .num { width: 40px; height: 40px; font-size: 21px; }
+.callout b { display: block; font: 600 26px/1.1 var(--heading); letter-spacing: -.02em; color: var(--text); }
+.callout p { margin: 7px 0 0; font: 400 17px/1.4 var(--font); color: var(--text-2); }

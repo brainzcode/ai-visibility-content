@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Post 1.2 images: the 10-second test</title>
+<!-- Source for every PNG in this folder. Render from the repo root:
+     /Users/sam/miniconda3/bin/python images/_templates/render.py images/2026-11-12-series1-10-second-test/index.html -->
+<link rel="stylesheet" href="../_templates/luminous-social.css">
+<style>
+  .top { position: absolute; display: flex; align-items: center; justify-content: space-between; }
+  .frame > .headline, .frame > .sub, .frame > .note, .frame > .kicker, .frame > .brand, .frame > .slide__hint { position: absolute; }
+
+  /* Two panels: what the customer types, and the verdict */
+  .panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 36px;
+    border-radius: 36px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--hair), 0 40px 80px -40px rgba(0, 0, 0, .7);
+    overflow: hidden;
+  }
+  .panel__label { font: 600 19px/1 var(--font); letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+  .panel__body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 36px; }
+  .thinking { display: flex; flex-direction: column; gap: 16px; padding: 0 6px; }
+  .thinking__head { display: flex; align-items: center; gap: 12px; font: 500 21px/1 var(--font); color: var(--accent); }
+  .thinking__head .ico { font-size: 24px; }
+  .thinking i { display: block; height: 16px; border-radius: 8px; background: rgba(255, 255, 255, .09); }
+  .thinking i:nth-of-type(1) { width: 92%; }
+  .thinking i:nth-of-type(2) { width: 78%; }
+  .thinking i:nth-of-type(3) { width: 56%; }
+
+  .stamps { position: relative; flex: 1; }
+  .stamp {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .1em .3em .08em;
+    border: .065em solid currentColor;
+    border-radius: .16em;
+    font: 700 var(--fs, 150px)/1 var(--heading);
+    letter-spacing: .03em;
+    filter: url(#rough);
+  }
+  .stamp::after { content: ""; position: absolute; inset: .055em; border: .02em solid currentColor; border-radius: .1em; opacity: .55; }
+  .stamp--in  { color: var(--accent); background: rgba(36, 198, 132, .08); transform: rotate(-9deg); }
+  .stamp--out { color: var(--stop);   background: rgba(240, 86, 74, .08);  transform: rotate(6deg); }
+
+  /* Square: LinkedIn + Facebook */
+  .sq .top { left: 80px; right: 80px; top: 76px; }
+  .sq .headline { left: 80px; top: 150px; font-size: 124px; }
+  .sq .p-search { left: 80px; top: 340px; width: 506px; height: 610px; }
+  .sq .p-verdict { left: 614px; top: 340px; width: 506px; height: 610px; }
+  .sq .stamp--in { left: 14px; top: 48px; }
+  .sq .stamp--out { right: 0; bottom: 26px; }
+  .sq .sub { left: 80px; top: 1000px; width: 1040px; }
+  .sq .note { left: 80px; bottom: 56px; }
+
+  /* X */
+  .xx .top { left: 96px; right: 96px; top: 84px; }
+  .xx .headline { left: 96px; top: 140px; font-size: 112px; }
+  .xx .p-search { left: 96px; top: 300px; width: 690px; height: 440px; }
+  .xx .p-verdict { left: 814px; top: 300px; width: 690px; height: 440px; }
+  .xx .stamp { --fs: 108px; }
+  .xx .stamp--in { left: 46px; top: 84px; }
+  .xx .stamp--out { right: 22px; top: 98px; }
+  .xx .sub { left: 96px; top: 780px; }
+
+  /* Instagram slide 1 */
+  .ig1 .top { left: 72px; right: 72px; top: 72px; }
+  .ig1 .headline { left: 72px; top: 142px; font-size: 132px; }
+  .ig1 .p-search { left: 72px; top: 470px; width: 452px; height: 600px; }
+  .ig1 .p-verdict { left: 556px; top: 470px; width: 452px; height: 600px; }
+  .ig1 .prompt { font-size: 28px; }
+  .ig1 .stamp { --fs: 132px; }
+  .ig1 .stamp--in { left: 10px; top: 24px; }
+  .ig1 .stamp--out { right: 0; bottom: 36px; }
+  .ig1 .sub { left: 72px; top: 1112px; width: 936px; }
+  .ig1 .slide__hint { right: 72px; bottom: 44px; }
+
+  /* TikTok cover: key content kept inside the 3:4 grid crop (y 240 to 1680) */
+  .tt .top { left: 80px; right: 80px; top: 256px; }
+  .tt .headline { left: 80px; top: 330px; font-size: 150px; }
+  .tt .p-search { left: 80px; top: 690px; width: 920px; height: 380px; }
+  .tt .p-verdict { left: 80px; top: 1100px; width: 920px; height: 420px; }
+  .tt .prompt { font-size: 36px; }
+  .tt .stamp { --fs: 136px; }
+  .tt .stamp--in { left: 50px; top: 60px; }
+  .tt .stamp--out { right: 50px; top: 76px; }
+  .tt .sub { left: 80px; top: 1560px; width: 920px; font-size: 32px; }
+
+  /* Slide 3: the answer list with an empty slot */
+  .answer { padding: 30px 30px 34px; border-radius: 30px; background: var(--paper); color: var(--ink); box-shadow: var(--sh-float); }
+  .answer__head { display: flex; align-items: center; gap: 12px; font: 600 19px/1 var(--font); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .answer__head .ico { font-size: 24px; color: var(--accent-ink); }
+  .answer ol { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .answer li { display: flex; align-items: center; gap: 18px; padding: 16px 18px; border-radius: 18px; background: var(--paper-2); font: 600 22px/1 var(--font); color: var(--ink-3); }
+  .answer li i { display: block; height: 16px; border-radius: 8px; background: #d6d8d5; }
+  .answer li.you { padding: 13.5px 15.5px; background: rgba(36, 198, 132, .07); border: 2.5px dashed var(--accent); color: var(--accent-ink); }
+  .answer li.you b { font: 600 24px/1 var(--heading); letter-spacing: -.01em; }
+
+  .checklist--plain li { padding: 26px 30px; align-items: center; }
+  .checklist--plain b { font-size: 34px; }
+
+  .cta-title { font-size: 104px; }
+  .cta-stamps { position: relative; height: 290px; }
+  .cta-stamps .stamp { --fs: 150px; }
+  .cta-stamps .stamp--in { left: 20px; top: 30px; }
+  .cta-stamps .stamp--out { left: 330px; top: 40px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 1.5c.85 5.9 4.6 9.65 10.5 10.5-5.9.85-9.65 4.6-10.5 10.5C11.15 16.6 7.4 12.85 1.5 12 7.4 11.15 11.15 7.4 12 1.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+</svg>
+
+<template id="tpl-search">
+  <span class="panel__label">Your customer types</span>
+  <div class="panel__body">
+    <div class="prompt">
+      <svg class="ico ico--fill prompt__spark"><use href="#i-spark"/></svg>
+      <span class="prompt__text">best plumber in Phoenix<span class="prompt__caret"></span></span>
+      <span class="prompt__go"><svg class="ico ico--stroke"><use href="#i-up"/></svg></span>
+    </div>
+    <div class="thinking">
+      <span class="thinking__head"><svg class="ico ico--fill"><use href="#i-spark"/></svg>AI is answering</span>
+      <i></i><i></i><i></i>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-verdict">
+  <span class="panel__label">You're either</span>
+  <div class="stamps">
+    <span class="stamp stamp--in">IN</span>
+    <span class="stamp stamp--out">OUT</span>
+  </div>
+</template>
+
+<!-- ── LinkedIn + Facebook, 1200 x 1200 ─────────────────────────────── -->
+<section class="frame frame--square sq" data-out="linkedin-facebook-1200x1200">
+  <div class="top">
+    <span class="kicker">Would AI recommend you?</span>
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+  </div>
+  <h1 class="headline">Did AI pick <em>you?</em></h1>
+  <div class="panel p-search" data-use="tpl-search"></div>
+  <div class="panel p-verdict" data-use="tpl-verdict"></div>
+  <p class="sub">Ask any AI assistant for your service in your city. Then reply <strong>IN</strong> or <strong>OUT</strong>.</p>
+</section>
+
+<!-- ── X, 1600 x 900 ────────────────────────────────────────────────── -->
+<section class="frame frame--x xx" data-out="x-1600x900">
+  <div class="top">
+    <span class="kicker">Would AI recommend you?</span>
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span><span class="brand__handle">@luminousdigital</span></div>
+  </div>
+  <h1 class="headline">Did AI pick <em>you?</em></h1>
+  <div class="panel p-search" data-use="tpl-search"></div>
+  <div class="panel p-verdict" data-use="tpl-verdict"></div>
+  <p class="sub">Ask any AI assistant for your service in your city. Then reply <strong>IN</strong> or <strong>OUT</strong>.</p>
+</section>
+
+<!-- ── TikTok cover, 1080 x 1920 ────────────────────────────────────── -->
+<section class="frame frame--tiktok tt" data-out="tiktok-cover-1080x1920">
+  <div class="top">
+    <span class="kicker">Would AI recommend you?</span>
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+  </div>
+  <h1 class="headline">Did AI<br>pick <em>you?</em></h1>
+  <div class="panel p-search" data-use="tpl-search"></div>
+  <div class="panel p-verdict" data-use="tpl-verdict"></div>
+  <p class="sub">The 10-second test: ask AI for your service in your city.</p>
+</section>
+
+<!-- ── Instagram carousel, 1080 x 1350 each ─────────────────────────── -->
+<section class="frame frame--ig ig1" data-out="instagram-slide-01-1080x1350">
+  <div class="top">
+    <span class="kicker">Would AI recommend you?</span>
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+  </div>
+  <h1 class="headline">Did AI<br>pick <em>you?</em></h1>
+  <div class="panel p-search" data-use="tpl-search"></div>
+  <div class="panel p-verdict" data-use="tpl-verdict"></div>
+  <p class="sub">The 10-second test: ask AI for your service in your city.</p>
+  <span class="slide__hint">Swipe <svg class="ico ico--stroke"><use href="#i-arrow"/></svg></span>
+</section>
+
+<section class="frame frame--ig slide" data-out="instagram-slide-02-1080x1350">
+  <header class="slide__top"><span class="kicker">Would AI recommend you?</span><span class="slide__count">2 / 6</span></header>
+  <div class="slide__body">
+    <div class="slide__eyebrow">The test</div>
+    <h2 class="headline slide__title">Search the way a customer would.</h2>
+    <p class="slide__text">Open ChatGPT, Gemini or Google and type:</p>
+    <div class="prompt">
+      <svg class="ico ico--fill prompt__spark"><use href="#i-spark"/></svg>
+      <span class="prompt__text">best <span class="token">your service</span> in <span class="token">your city</span><span class="prompt__caret"></span></span>
+      <span class="prompt__go"><svg class="ico ico--stroke"><use href="#i-up"/></svg></span>
+    </div>
+    <p class="slide__text" style="font-size:27px">When we ran it for wash and fold in San Diego, AI found <strong>10 businesses</strong> and recommended <strong>4.</strong></p>
+  </div>
+  <footer class="slide__foot">
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+    <span class="slide__hint">Swipe <svg class="ico ico--stroke"><use href="#i-arrow"/></svg></span>
+  </footer>
+</section>
+
+<section class="frame frame--ig slide" data-out="instagram-slide-03-1080x1350">
+  <header class="slide__top"><span class="kicker">Would AI recommend you?</span><span class="slide__count">3 / 6</span></header>
+  <div class="slide__body">
+    <div class="slide__eyebrow"><span class="num">1</span>Check one</div>
+    <h2 class="headline slide__title">Are you named at all?</h2>
+    <p class="slide__text">Read the whole answer, not only the top pick.</p>
+    <div class="answer">
+      <div class="answer__head"><svg class="ico ico--fill"><use href="#i-spark"/></svg>AI answer</div>
+      <ol>
+        <li>1<i style="width:52%"></i></li>
+        <li>2<i style="width:40%"></i></li>
+        <li>3<i style="width:58%"></i></li>
+        <li>4<i style="width:46%"></i></li>
+        <li class="you">?<b>Your business</b></li>
+      </ol>
+    </div>
+  </div>
+  <footer class="slide__foot">
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+    <span class="slide__hint">Swipe <svg class="ico ico--stroke"><use href="#i-arrow"/></svg></span>
+  </footer>
+</section>
+
+<section class="frame frame--ig slide" data-out="instagram-slide-04-1080x1350">
+  <header class="slide__top"><span class="kicker">Would AI recommend you?</span><span class="slide__count">4 / 6</span></header>
+  <div class="slide__body">
+    <div class="slide__eyebrow"><span class="num">2</span>Check two</div>
+    <h2 class="headline slide__title">Is what it says about you right?</h2>
+    <p class="slide__text">A wrong detail can send a customer somewhere else.</p>
+    <ul class="checklist checklist--plain">
+      <li><span class="box"></span><div><b>Your hours</b></div></li>
+      <li><span class="box"></span><div><b>The services you offer</b></div></li>
+      <li><span class="box"></span><div><b>The areas you cover</b></div></li>
+      <li><span class="box"></span><div><b>Your phone number</b></div></li>
+    </ul>
+  </div>
+  <footer class="slide__foot">
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+    <span class="slide__hint">Swipe <svg class="ico ico--stroke"><use href="#i-arrow"/></svg></span>
+  </footer>
+</section>
+
+<section class="frame frame--ig slide" data-out="instagram-slide-05-1080x1350">
+  <header class="slide__top"><span class="kicker">Would AI recommend you?</span><span class="slide__count">5 / 6</span></header>
+  <div class="slide__body">
+    <div class="slide__eyebrow"><span class="num">3</span>Check three</div>
+    <h2 class="headline slide__title">Who did it pick instead?</h2>
+    <p class="slide__text">Then look at what they have that you don't.</p>
+    <ul class="checklist checklist--plain">
+      <li><span class="box"></span><div><b>More reviews?</b></div></li>
+      <li><span class="box"></span><div><b>Reviews that mention specifics?</b></div></li>
+      <li><span class="box"></span><div><b>An address or service area on file?</b></div></li>
+    </ul>
+  </div>
+  <footer class="slide__foot">
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+    <span class="slide__hint">Swipe <svg class="ico ico--stroke"><use href="#i-arrow"/></svg></span>
+  </footer>
+</section>
+
+<section class="frame frame--ig slide" data-out="instagram-slide-06-1080x1350">
+  <header class="slide__top"><span class="kicker">Would AI recommend you?</span><span class="slide__count">6 / 6</span></header>
+  <div class="slide__body">
+    <h2 class="headline slide__title cta-title">So, are you in or out?</h2>
+    <div class="cta-stamps">
+      <span class="stamp stamp--in">IN</span>
+      <span class="stamp stamp--out">OUT</span>
+    </div>
+    <p class="slide__text">Comment <strong>IN</strong> or <strong>OUT</strong>. We'll go through the OUTs and tell you what's holding you back.</p>
+  </div>
+  <footer class="slide__foot">
+    <div class="brand"><img src="../_templates/luminous-logo.svg" alt=""><span class="brand__word">Luminous</span></div>
+    <span class="brand__handle">@luminousdigital</span>
+  </footer>
+</section>
+
+<script src="../_templates/frames.js"></script>
+</body>
+</html>
